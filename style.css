@@ -1,0 +1,41 @@
+*{
+    /* margin: 0;
+    padding: 0;
+    box-sizing: border-box; */
+    font-family: 'Poppins', sans-serif;
+
+    background-color: black;
+    color: white;
+
+
+}
+
+body{
+    height: 100vh;
+    display: grid;
+    place-items: center;
+    /* background-color: black; */
+}
+
+article{
+    display: grid;
+    place-items: center;
+    align-items: center;
+}
+
+#contend{
+    display: flex;
+    justify-items: auto;
+    gap: 20px;
+}
+
+#arrow{
+    align-items: center;
+    justify-items: center;
+    cursor: pointer;
+}
+
+label{
+    display: flex;
+    justify-content: center;
+}

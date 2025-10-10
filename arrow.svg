@@ -1,0 +1,12 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo circular -->
+  <circle cx="200" cy="200" r="180" fill="#1a1a1a"/>
+  
+  <!-- Chevron (flecha derecha) con puntas redondeadas -->
+  <path d="M 150 100 L 250 200 L 150 300" 
+        stroke="#ffffff" 
+        stroke-width="45" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        fill="none"/>
+</svg>
