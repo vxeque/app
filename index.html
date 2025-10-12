@@ -1,53 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Translator</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="image/png" href="./static/traductor.png" />
+    <script type="module" src="app.js"></script>
+  </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Translate</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
+  <body>
     <article>
-        <h1>Translate</h1>
-        <div>
-            <form>
-                <div id="contend">
-                    <div>
-                        <label for="text">Text to translate:</label><br>
-                        <select id="sourceLang" name="sourceLang">
-                            <option value="es">Español</option>
-                            <option value="en">Inglés</option>
-                            <option value="fr">Francés</option>
-                            <option value="de">Alemán</option>
-                            <option value="it">Italiano</option>
-                            <option value="pt">Portugués</option>
-                            <option value="ja">Japonés</option>
-                            <option value="zh">Chino</option>
-                        </select>
-                        <textarea id="text" name="text" rows="4" cols="50"></textarea>
-                    </div>
-                    <img src="arrow.svg" height="30" width="30" alt="Arrow" id="arrow">
-                    <div>
-                        <label for="target_lang">Target Language</label><br>
-                        <select id="sourceLang" name="sourceLang">
-                            <option value="es">Español</option>
-                            <option value="en">Inglés</option>
-                            <option value="fr">Francés</option>
-                            <option value="de">Alemán</option>
-                            <option value="it">Italiano</option>
-                            <option value="pt">Portugués</option>
-                            <option value="ja">Japonés</option>
-                            <option value="zh">Chino</option>
-                        </select>
-                        <textarea type="text" rows="4" cols="50"></textarea>
-                    </div>
-                </div>
-                <button type="submit">Send</button>
-            </form>
-        </div>
-    </article>
-</body>
+      <h1>Translator</h1>
+      <div>
+        <form>
+          <div id="contend">
+            <div class="list_lenguages">
+              <label for="text">Text to translate:</label>
+              <select id="sourceLang" name="sourceLang">
+                <option value="es">Español</option>
+                <option value="en">Inglés</option>
+                <option value="fr">Francés</option>
+                <option value="de">Alemán</option>
+                <option value="it">Italiano</option>
+                <option value="pt">Portugués</option>
+                <option value="ja">Japonés</option>
+                <option value="zh">Chino</option>
+              </select>
+              <textarea id="text" name="text" rows="4" cols="50" placeholder="Write the text to be translated..."></textarea>
+            </div>
 
+            <img
+              src="./static/arrow.svg"
+              height="30"
+              width="30"
+              alt="Arrow"
+              id="arrow"
+            />
+            
+            <div class="list_lenguages">
+              <label for="target_lang">Target Language</label>
+              <select id="sourceLang" name="sourceLang">
+                <option value="es">Español</option>
+                <option value="en">Inglés</option>
+                <option value="fr">Francés</option>
+                <option value="de">Alemán</option>
+                <option value="it">Italiano</option>
+                <option value="pt">Portugués</option>
+                <option value="ja">Japonés</option>
+                <option value="zh">Chino</option>
+              </select>
+              <textarea type="text" rows="4" cols="50" placeholder="Translated text..."></textarea>
+            </div>
+          </div>
+          <!-- <button type="submit">Send</button> -->
+        </form>
+      </div>
+    </article>
+
+  </body>
 </html>
+
+
+<script>
+
+</script>

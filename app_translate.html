@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traductor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        article {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+
+        #contend {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .translation-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        label {
+            font-weight: 600;
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+            margin-bottom: 10px;
+            background: white;
+            cursor: pointer;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            resize: vertical;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        #result {
+            background-color: #f8f9fa;
+        }
+
+        #arrow {
+            cursor: pointer;
+            transition: transform 0.3s;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+        }
+
+        #arrow:hover {
+            transform: scale(1.1);
+            background: #e0e0e0;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .error {
+            background-color: #fee;
+            color: #c33;
+            border: 1px solid #fcc;
+        }
+
+        .success {
+            background-color: #efe;
+            color: #3c3;
+            border: 1px solid #cfc;
+        }
+
+        .info {
+            background-color: #eef;
+            color: #33c;
+            border: 1px solid #ccf;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            #contend {
+                grid-template-columns: 1fr;
+            }
+
+            #arrow {
+                transform: rotate(90deg);
+                justify-self: center;
+            }
+
+            article {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <article>
+        <h1>🌐 Traductor</h1>
+        <form id="translateForm">
+            <div id="contend">
+                <div class="translation-box">
+                    <label for="sourceLang">Idioma origen:</label>
+                    <select id="sourceLang" name="sourceLang">
+                        <option value="es">Español</option>
+                        <option value="en">Inglés</option>
+                        <option value="fr">Francés</option>
+                        <option value="de">Alemán</option>
+                        <option value="it">Italiano</option>
+                        <option value="pt">Portugués</option>
+                        <option value="ja">Japonés</option>
+                        <option value="zh">Chino</option>
+                    </select>
+                    <label for="text">Texto a traducir:</label>
+                    <textarea 
+                        id="text" 
+                        name="text" 
+                        rows="6" 
+                        placeholder="Escribe aquí el texto..."
+                        required
+                    ></textarea>
+                </div>
+
+                <svg id="arrow" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="200" cy="200" r="180" fill="#667eea"/>
+                    <path d="M 150 100 L 250 200 L 150 300" 
+                          stroke="#ffffff" 
+                          stroke-width="45" 
+                          stroke-linecap="round" 
+                          stroke-linejoin="round" 
+                          fill="none"/>
+                </svg>
+
+                <div class="translation-box">
+                    <label for="targetLang">Idioma destino:</label>
+                    <select id="targetLang" name="targetLang">
+                        <option value="en">Inglés</option>
+                        <option value="es">Español</option>
+                        <option value="fr">Francés</option>
+                        <option value="de">Alemán</option>
+                        <option value="it">Italiano</option>
+                        <option value="pt">Portugués</option>
+                        <option value="ja">Japonés</option>
+                        <option value="zh">Chino</option>
+                    </select>
+                    <label for="result">Traducción:</label>
+                    <textarea 
+                        id="result" 
+                        rows="6" 
+                        placeholder="La traducción aparecerá aquí..."
+                        readonly
+                    ></textarea>
+                </div>
+            </div>
+
+            <button type="submit" id="translateBtn">Traducir</button>
+            <div id="message" class="message hidden"></div>
+        </form>
+    </article>
+
+    <script>
+        const form = document.getElementById('translateForm');
+        const textInput = document.getElementById('text');
+        const resultOutput = document.getElementById('result');
+        const sourceLang = document.getElementById('sourceLang');
+        const targetLang = document.getElementById('targetLang');
+        const translateBtn = document.getElementById('translateBtn');
+        const messageDiv = document.getElementById('message');
+        const arrow = document.getElementById('arrow');
+
+        let translator = null;
+
+        // Mostrar mensajes
+        function showMessage(text, type = 'info') {
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.classList.remove('hidden');
+        }
+
+        function hideMessage() {
+            messageDiv.classList.add('hidden');
+        }
+
+        // Verificar si la API está disponible
+        async function checkAPIAvailability() {
+            if (!('translation' in self && 'createTranslator' in self.translation)) {
+                showMessage('❌ Translation API no disponible. Usa Chrome 130+ y activa chrome://flags/#translation-api', 'error');
+                translateBtn.disabled = true;
+                return false;
+            }
+            return true;
+        }
+
+        // Crear traductor
+        async function createTranslator(source, target) {
+            try {
+                const canTranslate = await self.translation.canTranslate({
+                    sourceLanguage: source,
+                    targetLanguage: target
+                });
+
+                if (canTranslate === 'no') {
+                    showMessage('❌ Este par de idiomas no está disponible', 'error');
+                    return null;
+                }
+
+                if (canTranslate === 'after-download') {
+                    showMessage('⏳ Descargando modelo de traducción...', 'info');
+                }
+
+                translator = await self.translation.createTranslator({
+                    sourceLanguage: source,
+                    targetLanguage: target
+                });
+
+                return translator;
+            } catch (error) {
+                showMessage(`❌ Error al crear traductor: ${error.message}`, 'error');
+                return null;
+            }
+        }
+
+        // Traducir texto
+        async function translateText(text) {
+            try {
+                translateBtn.disabled = true;
+                translateBtn.textContent = 'Traduciendo...';
+
+                const source = sourceLang.value;
+                const target = targetLang.value;
+
+                if (source === target) {
+                    showMessage('⚠️ Selecciona idiomas diferentes', 'error');
+                    resultOutput.value = text;
+                    return;
+                }
+
+                // Crear nuevo traductor si cambió el par de idiomas
+                if (!translator) {
+                    translator = await createTranslator(source, target);
+                    if (!translator) return;
+                }
+
+                const translation = await translator.translate(text);
+                resultOutput.value = translation;
+                showMessage('✅ Traducción completada', 'success');
+
+            } catch (error) {
+                showMessage(`❌ Error: ${error.message}`, 'error');
+                console.error('Error de traducción:', error);
+            } finally {
+                translateBtn.disabled = false;
+                translateBtn.textContent = 'Traducir';
+            }
+        }
+
+        // Intercambiar idiomas
+        arrow.addEventListener('click', () => {
+            const tempLang = sourceLang.value;
+            sourceLang.value = targetLang.value;
+            targetLang.value = tempLang;
+
+            const tempText = textInput.value;
+            textInput.value = resultOutput.value;
+            resultOutput.value = tempText;
+
+            translator = null; // Reset traductor
+            hideMessage();
+        });
+
+        // Resetear traductor cuando cambian los idiomas
+        sourceLang.addEventListener('change', () => {
+            translator = null;
+            hideMessage();
+        });
+
+        targetLang.addEventListener('change', () => {
+            translator = null;
+            hideMessage();
+        });
+
+        // Enviar formulario
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            hideMessage();
+
+            const text = textInput.value.trim();
+            if (!text) {
+                showMessage('⚠️ Escribe algo para traducir', 'error');
+                return;
+            }
+
+            await translateText(text);
+        });
+
+        // Inicializar
+        (async () => {
+            const isAvailable = await checkAPIAvailability();
+            if (isAvailable) {
+                showMessage('✅ API de traducción lista. Escribe algo y presiona "Traducir"', 'success');
+                setTimeout(hideMessage, 3000);
+            }
+        })();
+    </script>
+</body>
+</html>

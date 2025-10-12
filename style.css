@@ -1,41 +1,71 @@
-*{
-    /* margin: 0;
+* {
+  /* margin: 0;
     padding: 0;
     box-sizing: border-box; */
-    font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 
-    background-color: black;
-    color: white;
-
-
+  background-color: black;
+  color: white;
 }
 
-body{
-    height: 100vh;
-    display: grid;
-    place-items: center;
-    /* background-color: black; */
+body {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  /* background-color: black; */
 }
 
-article{
-    display: grid;
-    place-items: center;
-    align-items: center;
+article {
+  display: grid;
+  place-items: center;
+  align-items: center;
 }
 
-#contend{
-    display: flex;
-    justify-items: auto;
-    gap: 20px;
+#contend {
+  
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 30px;
 }
 
-#arrow{
-    align-items: center;
-    justify-items: center;
-    cursor: pointer;
+#arrow {
+  align-items: center;
+  justify-items: center;
+  cursor: pointer;
 }
 
-label{
-    display: flex;
-    justify-content: center;
+label {
+  display: flex;
+  justify-content: center;
+}
+
+select {
+  background-color: #101010;
+  border: 0;
+  border-radius: 6px;
+  padding: 0.3rem;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.list_lenguages {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+textarea {
+  background-color: #101010;
+  border: 0;
+  border-radius: 6px;
+  padding: 0.3rem;
+  font-size: 15px;
+
+  resize: none;
+  outline: none;
+  
+  /* resize: none; */
+  /* field-sizing: content; */
 }
