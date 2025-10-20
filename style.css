@@ -1,7 +1,4 @@
 * {
-  /* margin: 0;
-    padding: 0;
-    box-sizing: border-box; */
   font-family: "Poppins", sans-serif;
 
   background-color: black;
@@ -50,6 +47,10 @@ select {
   cursor: pointer;
 }
 
+option {
+  background-color: #101010;
+}
+
 .list_lenguages {
   display: flex;
   flex-direction: column;
@@ -62,10 +63,15 @@ textarea {
   border-radius: 6px;
   padding: 0.3rem;
   font-size: 15px;
-
+  width: 30rem;
+  height: 200px;
   resize: none;
-  outline: none;
+  /* outline: none; */
   
   /* resize: none; */
   /* field-sizing: content; */
+}
+
+#translate-button{
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1);
 }

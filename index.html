@@ -5,19 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Translator</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="modal_style.css" />
     <link rel="icon" type="image/png" href="./static/traductor.png" />
     <script type="module" src="app.js"></script>
+
+    <!-- <script type="module" src="g.js"></script> -->
   </head>
 
   <body>
     <article>
+      <label id="label-text-activation"></label>
       <h1>Translator</h1>
       <div>
         <form>
           <div id="contend">
             <div class="list_lenguages">
-              <label for="text">Text to translate:</label>
-              <select id="sourceLang" name="sourceLang">
+              <label>Text to translate:</label>
+              <select id="source-lang" name="sourceLang">
+                <option value="au">Automatico</option>
                 <option value="es">Español</option>
                 <option value="en">Inglés</option>
                 <option value="fr">Francés</option>
@@ -27,20 +32,28 @@
                 <option value="ja">Japonés</option>
                 <option value="zh">Chino</option>
               </select>
-              <textarea id="text" name="text" rows="4" cols="50" placeholder="Write the text to be translated..."></textarea>
+              <textarea
+                id="input-text"
+                type="text"
+                rows="4"
+                cols="50"
+                placeholder="Write the text to be translated..."
+              ></textarea>
             </div>
 
-            <img
-              src="./static/arrow.svg"
-              height="30"
-              width="30"
-              alt="Arrow"
-              id="arrow"
-            />
-            
+            <div id="translate-button">
+              <img
+                src="./static/arrow.svg"
+                height="30"
+                width="30"
+                alt="Arrow"
+                id="arrow"
+              />
+            </div>
+
             <div class="list_lenguages">
-              <label for="target_lang">Target Language</label>
-              <select id="sourceLang" name="sourceLang">
+              <label for="target-lang">Target Language</label>
+              <select id="target-lang" name="sourceLang">
                 <option value="es">Español</option>
                 <option value="en">Inglés</option>
                 <option value="fr">Francés</option>
@@ -50,18 +63,17 @@
                 <option value="ja">Japonés</option>
                 <option value="zh">Chino</option>
               </select>
-              <textarea type="text" rows="4" cols="50" placeholder="Translated text..."></textarea>
+              <textarea
+                id="output-text"
+                type="text"
+                rows="4"
+                cols="50"
+                placeholder="Translated text..."
+              ></textarea>
             </div>
           </div>
-          <!-- <button type="submit">Send</button> -->
         </form>
       </div>
     </article>
-
   </body>
 </html>
-
-
-<script>
-
-</script>
