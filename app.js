@@ -52,6 +52,8 @@ class TranslatorApp {
   async activateTranslator() {
     try {
       const activateBtn = $("#label-text-activation");
+
+
       activateBtn.textContent = "🔄 Activando Traductor...";
       activateBtn.disabled = true;
 
@@ -62,7 +64,7 @@ class TranslatorApp {
       );
 
       this.isModelLoaded = true;
-      activateBtn.textContent = "";
+      activateBtn.textContent = "Traductor Activado ✅";
 
     } catch (error) {
       console.error("Error activating translator:", error);
@@ -118,22 +120,20 @@ class TranslatorApp {
         `Translator availability for ${sourceLang} to ${targetLang}: ${status}`
       );
 
-      // Manejamos los diferentes estados de disponibilidad
-      switch (status) {
-        case "ready":
-          break; // Podemos continuar
-        case "downloadable":
-        case "downloading":
-          throw new Error(
-            "Por favor, interactúa con la página para permitir la descarga del modelo de traducción"
-          );
-        case "unavailable":
-          throw new Error(
-            `La traducción de ${sourceLang} a ${targetLang} no está disponible`
-          );
+      //
+      this.agregarOptionSiNoExiste(this.sourceLangSelect.id, sourceLang, sourceLang);
+
+      // Manejamos los diferentes estados de disponibilidad.
+      // Si el modelo es "downloadable" o "downloading", intentamos crear el traductor
+      // porque la llamada debería realizarse tras un gesto del usuario (click).
+      if (status === "unavailable") {
+        throw new Error(
+          `La traducción de ${sourceLang} a ${targetLang} no está disponible`
+        );
       }
 
-      // Creamos el traductor solo si está disponible
+      // Intentamos crear el traductor; si el navegador bloquea la descarga por no haber
+      // interacción del usuario, Translator.create debería rechazar y lo capturamos abajo.
       const translator = await Translator.create({
         sourceLanguage: sourceLang,
         targetLanguage: targetLang,
@@ -146,6 +146,23 @@ class TranslatorApp {
       throw error;
     }
   }
+
+
+  agregarOptionSiNoExiste(selectId, valor, texto) {
+    const select = document.getElementById(selectId);
+    const existe = Array.from(select.options).some(opt => opt.value === valor);
+
+    if (!existe) {
+      const nuevaOpcion = document.createElement("option");
+      nuevaOpcion.value = valor;
+      nuevaOpcion.text = texto;
+      select.appendChild(nuevaOpcion);
+    }
+
+    // (Opcional) seleccionar automáticamente la nueva opción
+    select.value = valor;
+  }
+
 
   // Traducir un texto
   async translateText(text, targetLang = "en") {
@@ -170,6 +187,8 @@ class TranslatorApp {
       const translator = await this.createTranslator(sourceLang, targetLang);
 
       console.log("Translator ready:", translator);
+
+
 
       // Traducir
       const translatedText = await translator.translate(text);
@@ -211,9 +230,19 @@ class TranslatorApp {
   async setupEventListeners() {
     // Agregamos un manejador de eventos para el botón de traducción
     const translateButton = $("#translate-button"); // Asegúrate de tener este botón en tu HTML
+    const activateButton = $("#activate-translator-button");
 
-    // Evento para activar el traductor
-    this.activateTranslator();
+
+    // Activation button must be clicked by user to allow model download
+    if (activateButton) {
+      activateButton.addEventListener("click", async () => {
+        try {
+          await this.activateTranslator();
+        } catch (err) {
+          console.error("Activation failed:", err);
+        }
+      });
+    }
 
     translateButton.addEventListener("click", async () => {
       const text = this.inputTextArea.value.trim();
@@ -226,16 +255,47 @@ class TranslatorApp {
       const targetLang = this.targetLangSelect.value;
 
       try {
+        // If model not loaded yet, try to create translator now (this click is a user gesture)
+        if (!this.isModelLoaded) {
+          try {
+            await this.createTranslator(TranslatorApp.DEFAULT_SOURCE_LANG, targetLang);
+            this.isModelLoaded = true;
+            const label = $("#label-text-activation");
+            // if (label) label.textContent = "Traductor Activado ✅";
+
+            // Cambiar el ícono del botón a "download_done.svg"
+            const closeImgEl = $(".button-close-download");
+            if (closeImgEl) {
+              // If the selected element is the <img> itself
+              if (closeImgEl.tagName && closeImgEl.tagName.toLowerCase() === "img") {
+                closeImgEl.src = "static/download_done.svg";
+              } else if (closeImgEl.querySelector) {
+                // Otherwise, look for an <img> inside it
+                const imgChild = closeImgEl.querySelector("img");
+                if (imgChild) imgChild.src = "static/download_done.svg";
+              }
+            }
+
+          } catch (createErr) {
+            console.error("Error creating translator on user gesture:", createErr);
+            // If creation failed because the model requires more explicit user interaction,
+            // instruct the user to click the activation button.
+            if (createErr.message && createErr.message.includes("interactúa")) {
+              this.outputTextArea.value =
+                "Please click 'Activate Translator' to allow model download, then try again.";
+              return;
+            } else {
+              this.outputTextArea.value = "Error: " + createErr.message;
+              return;
+            }
+          }
+        }
+
         const result = await this.translateText(text, targetLang);
         this.outputTextArea.value = result.translatedText;
       } catch (error) {
-        // console.error("Translation failed:", error);
+        console.error("Translation failed:", error);
         this.outputTextArea.value = "Error: " + error.message;
-
-        if (error.message.includes("interactúa con la página")) {
-          this.outputTextArea.value =
-            "Please click 'Translate' again to download the translation model.";
-        }
       }
     });
   }
