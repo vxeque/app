@@ -1,5 +1,4 @@
 import { $, $$ } from "./dom.js";
-import { Modal } from "./modal.js";
 
 class TranslatorApp {
   static DEFAULT_SOURCE_LANG = "es";
@@ -30,10 +29,24 @@ class TranslatorApp {
 
     this.sourceLangSelect.value = TranslatorApp.DEFAULT_SOURCE_LANG;
 
+    // detectar version chrome 
+    this.checkChromeVersion();
+
     this.setupEventListeners();
 
     // detector
     this.initDetector();
+  }
+
+  checkChromeVersion() {
+    const userAgent = navigator.userAgent;
+    const chromeMatch = userAgent.match(/Chrome\/(\d+)/);
+    if (chromeMatch) {
+      const chromeVersion = parseInt(chromeMatch[1], 10);
+      console.log(`Chrome version detected: ${chromeVersion}`);
+    } else {
+      console.log("Chrome version not detected");
+    }
   }
 
   async activateTranslator() {
@@ -63,7 +76,7 @@ class TranslatorApp {
     if (!this.hasNativeTranslator || !this.hasNativeDetector) {
       console.warn("Native translation or detection API not available.");
     } else {
-      // console.log("Native translation and detection API available.");
+      console.log("Native translation and detection API available.");
     }
   }
 
@@ -71,10 +84,10 @@ class TranslatorApp {
     if (!this.hasNativeDetector) return false;
     try {
       this.detector = await LanguageDetector.create();
-      // console.log("Language detector initialized");
+      console.log("Language detector initialized");
       return true;
     } catch (error) {
-      // console.error("Error creating detector:", error);
+      console.error("Error creating detector:", error);
       return false;
     }
   }
@@ -101,9 +114,9 @@ class TranslatorApp {
         targetLanguage: targetLang,
       });
 
-      // console.log(
-      //   `Translator availability for ${sourceLang} to ${targetLang}: ${status}`
-      // );
+      console.log(
+        `Translator availability for ${sourceLang} to ${targetLang}: ${status}`
+      );
 
       // Manejamos los diferentes estados de disponibilidad
       switch (status) {
@@ -156,11 +169,11 @@ class TranslatorApp {
       // Crear/obtener el traductor
       const translator = await this.createTranslator(sourceLang, targetLang);
 
-      // console.log("Translator ready:", translator);
+      console.log("Translator ready:", translator);
 
       // Traducir
       const translatedText = await translator.translate(text);
-      // console.log(`Translated text: ${translatedText}`);
+      console.log(`Translated text: ${translatedText}`);
 
       return {
         translatedText: translatedText,
@@ -169,7 +182,7 @@ class TranslatorApp {
         wasTranslated: true,
       };
     } catch (error) {
-      // console.error("Error translating text:", error);
+      console.error("Error translating text:", error);
       throw error;
     }
   }

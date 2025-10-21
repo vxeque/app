@@ -5,14 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Translator</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="modal_style.css" />
     <link rel="icon" type="image/png" href="./static/traductor.png" />
     <script type="module" src="app.js"></script>
-
-    <!-- <script type="module" src="g.js"></script> -->
   </head>
-
   <body>
+    <nav>
+      <ul class="nav-list">
+        <li class="dropdown-button">
+          <a href="https://github.com/vxeque/app.git">Resources</a>
+        </li>
+        <li class="dropdown">
+          <div class="dropdown-button">Language</div>
+          <div class="dropdown-content">
+            <ul class="language-list">
+              <li>🇺🇸🇬🇧 English</li>
+              <li>🇪🇸 Español</li>
+              <li>🇫🇷 Français</li>
+              <li>🇩🇪 Deutsch</li>
+              <li>🇮🇹 Italiano</li>
+              <li>🇨🇳 中文</li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="dropdown">
+          <div class="dropdown-button">File</div>
+          <div class="dropdown-content">
+            <ul class="language-list">
+              <li>PDF</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </nav>
+
     <article>
       <label id="label-text-activation"></label>
       <h1>Translator</h1>
@@ -20,7 +46,7 @@
         <form>
           <div id="contend">
             <div class="list_lenguages">
-              <label>Text to translate:</label>
+              <label>Text to translate</label>
               <select id="source-lang" name="sourceLang">
                 <option value="au">Automatico</option>
                 <option value="es">Español</option>
@@ -41,14 +67,14 @@
               ></textarea>
             </div>
 
-            <div id="translate-button">
-              <img
-                src="./static/arrow.svg"
-                height="30"
-                width="30"
-                alt="Arrow"
-                id="arrow"
-              />
+            <div>
+              <div id="translate-button">
+                <img src="static/arrow_forward.svg" alt="" />
+              </div>
+
+              <div id="translate-button">
+                <img src="static/sync.svg" alt="" />
+              </div>
             </div>
 
             <div class="list_lenguages">
@@ -75,5 +101,15 @@
         </form>
       </div>
     </article>
+
+    <footer>
+      <!-- <p>&copy; 2025 Translator App</p> -->
+      <p>
+        <img src="static/github.png" alt="" id="github-logo" /><a
+          href="https://github.com/vxeque/app.git"
+          >GitHub</a
+        >
+      </p>
+    </footer>
   </body>
 </html>
