@@ -207,6 +207,8 @@ footer p {
   align-items: center;
   gap: 0.5rem;
   padding: .2rem 1rem;
+
+  /* background-color: aqua; */
 }
 
 footer p:hover{

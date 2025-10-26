@@ -1,4 +1,5 @@
 import { $, $$ } from "./dom.js";
+// import { PDFTextExtractor } from "./extract_module/PDFTextExtractor.js";
 
 class TranslatorApp {
   static DEFAULT_SOURCE_LANG = "es";
@@ -29,13 +30,15 @@ class TranslatorApp {
 
     this.sourceLangSelect.value = TranslatorApp.DEFAULT_SOURCE_LANG;
 
-    // detectar version chrome 
+    // detectar version chrome
     this.checkChromeVersion();
 
     this.setupEventListeners();
 
     // detector
     this.initDetector();
+
+    const extractor = new PDFTextExtractor();
   }
 
   checkChromeVersion() {
@@ -53,7 +56,6 @@ class TranslatorApp {
     try {
       const activateBtn = $("#label-text-activation");
 
-
       activateBtn.textContent = "🔄 Activando Traductor...";
       activateBtn.disabled = true;
 
@@ -65,7 +67,6 @@ class TranslatorApp {
 
       this.isModelLoaded = true;
       activateBtn.textContent = "Traductor Activado ✅";
-
     } catch (error) {
       console.error("Error activating translator:", error);
     }
@@ -121,7 +122,11 @@ class TranslatorApp {
       );
 
       //
-      this.agregarOptionSiNoExiste(this.sourceLangSelect.id, sourceLang, sourceLang);
+      this.agregarOptionSiNoExiste(
+        this.sourceLangSelect.id,
+        sourceLang,
+        sourceLang
+      );
 
       // Manejamos los diferentes estados de disponibilidad.
       // Si el modelo es "downloadable" o "downloading", intentamos crear el traductor
@@ -147,10 +152,11 @@ class TranslatorApp {
     }
   }
 
-
   agregarOptionSiNoExiste(selectId, valor, texto) {
     const select = document.getElementById(selectId);
-    const existe = Array.from(select.options).some(opt => opt.value === valor);
+    const existe = Array.from(select.options).some(
+      (opt) => opt.value === valor
+    );
 
     if (!existe) {
       const nuevaOpcion = document.createElement("option");
@@ -162,7 +168,6 @@ class TranslatorApp {
     // (Opcional) seleccionar automáticamente la nueva opción
     select.value = valor;
   }
-
 
   // Traducir un texto
   async translateText(text, targetLang = "en") {
@@ -187,8 +192,6 @@ class TranslatorApp {
       const translator = await this.createTranslator(sourceLang, targetLang);
 
       console.log("Translator ready:", translator);
-
-
 
       // Traducir
       const translatedText = await translator.translate(text);
@@ -232,7 +235,6 @@ class TranslatorApp {
     const translateButton = $("#translate-button"); // Asegúrate de tener este botón en tu HTML
     const activateButton = $("#activate-translator-button");
 
-
     // Activation button must be clicked by user to allow model download
     if (activateButton) {
       activateButton.addEventListener("click", async () => {
@@ -258,7 +260,10 @@ class TranslatorApp {
         // If model not loaded yet, try to create translator now (this click is a user gesture)
         if (!this.isModelLoaded) {
           try {
-            await this.createTranslator(TranslatorApp.DEFAULT_SOURCE_LANG, targetLang);
+            await this.createTranslator(
+              TranslatorApp.DEFAULT_SOURCE_LANG,
+              targetLang
+            );
             this.isModelLoaded = true;
             const label = $("#label-text-activation");
             // if (label) label.textContent = "Traductor Activado ✅";
@@ -267,7 +272,10 @@ class TranslatorApp {
             const closeImgEl = $(".button-close-download");
             if (closeImgEl) {
               // If the selected element is the <img> itself
-              if (closeImgEl.tagName && closeImgEl.tagName.toLowerCase() === "img") {
+              if (
+                closeImgEl.tagName &&
+                closeImgEl.tagName.toLowerCase() === "img"
+              ) {
                 closeImgEl.src = "static/download_done.svg";
               } else if (closeImgEl.querySelector) {
                 // Otherwise, look for an <img> inside it
@@ -275,9 +283,11 @@ class TranslatorApp {
                 if (imgChild) imgChild.src = "static/download_done.svg";
               }
             }
-
           } catch (createErr) {
-            console.error("Error creating translator on user gesture:", createErr);
+            console.error(
+              "Error creating translator on user gesture:",
+              createErr
+            );
             // If creation failed because the model requires more explicit user interaction,
             // instruct the user to click the activation button.
             if (createErr.message && createErr.message.includes("interactúa")) {
@@ -299,8 +309,32 @@ class TranslatorApp {
       }
     });
   }
-}
 
+  /**
+   *
+   * Extract text from uploaded PDF
+   *
+   */
+
+  async extractTextFromPDF(file) {
+    // uso independiente del PDFTextExtractor
+    const extractor = new PDFTextExtractor();
+
+    // cargar pdf
+    const pdfInfo = await extractor.loadPDFFromFile(file);
+
+    // extraer texto
+    const text = await extractor.extractTextAllPages((current, total, page) => {
+      console.log(`Extracting page ${current} of ${total}`);
+    });
+
+    this.inputTextArea.value = 'hola';
+
+    return {
+      text,
+    };
+  }
+}
 const translatorApp = new TranslatorApp();
 
 document.addEventListener("DOMContentLoaded", () => {

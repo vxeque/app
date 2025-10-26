@@ -3,10 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Título de la página -->
     <title>Translator</title>
-    <link rel="stylesheet" href="style.css" />
+
+    <!-- importar estilos -->
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/style.pdf.css" />
+
+    <!-- importar icono -->
     <link rel="icon" type="image/png" href="./static/traductor.png" />
-    <script type="module" src="app.js"></script>
+
+    <!-- importar scripts -->
+    <script type="module" src="./js/app.js"></script>
+    <!-- Primero cargar PDF.js -->
+    <!-- <script src="./js/lib/pdf.min.js"></script> -->
+
+    <!-- Luego cargar tus archivos -->
+    <!-- <script src="./js/extractPDF.js"></script> -->
   </head>
   <body>
     <nav>
@@ -35,6 +49,11 @@
               <li>PDF</li>
             </ul>
           </div>
+        </li>
+
+        <li class="dropdown-button">
+          <!-- <a href="https://github.com/vxeque/app.git">Resources</a> -->
+          Help
         </li>
       </ul>
     </nav>
@@ -73,12 +92,15 @@
                 <img src="static/arrow_forward.svg" alt="" />
               </div>
 
-              <div id="translate-button" >
+              <div id="translate-button">
                 <img src="static/sync.svg" alt="" />
               </div>
 
               <div id="translate-button" class="button-close-download">
-                <img src="static/close.svg" id="">
+                <img src="static/close.svg" id="" />
+              </div>
+              <div id="translate-button" class="button-close-download">
+                <img src="static/attach_file.svg" id="" />
               </div>
             </div>
 
@@ -107,13 +129,97 @@
       </div>
     </article>
 
-    <footer>
+    <!-- codigo para PDF.js -->
+           <div class="upload-section">
+            <input type="file" id="pdf-file" accept=".pdf" class="file-input">
+            <label for="pdf-file" class="file-label">
+                <span class="file-icon">📄</span>
+                Seleccionar archivo PDF
+            </label>
+        </div>
+
+        <div class="options-section">
+            <div class="option-group">
+                <label>
+                    <input type="radio" name="extraction-mode" value="all" checked>
+                    Extraer todas las páginas
+                </label>
+                <label>
+                    <input type="radio" name="extraction-mode" value="range">
+                    Rango de páginas
+                </label>
+                <label>
+                    <input type="radio" name="extraction-mode" value="single">
+                    Página específica
+                </label>
+            </div>
+
+            <div class="range-inputs">
+                <input type="number" id="start-page" placeholder="Desde" min="1" disabled>
+                <span>a</span>
+                <input type="number" id="end-page" placeholder="Hasta" min="1" disabled>
+            </div>
+
+            <div class="single-input">
+                <input type="number" id="single-page" placeholder="Número de página" min="1" disabled>
+            </div>
+        </div>
+
+        <div class="actions-section">
+            <button id="extract-btn" class="btn btn-primary" disabled>
+                Extraer Texto
+            </button>
+            <button id="clear-btn" class="btn btn-secondary">
+                Limpiar
+            </button>
+        </div>
+
+        <div class="progress-section" id="progress-section" style="display: none;">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="progress-text" id="progress-text">Procesando...</div>
+        </div>
+
+        <div class="results-section" id="results-section" style="display: none;">
+            <div class="results-header">
+                <h3>Texto Extraído</h3>
+                <div class="results-actions">
+                    <button id="copy-btn" class="btn btn-success">
+                        Copiar
+                    </button>
+                    <button id="download-btn" class="btn btn-success">
+                        Descargar
+                    </button>
+                </div>
+            </div>
+            <div class="results-info" id="results-info"></div>
+            <pre id="text-output"></pre>
+        </div>
+
+        <div id="status-messages"></div>
+    </div>
+
+    <!-- Fin del código para PDF.js -->
+
+    <!-- <footer>
       <p>
         <img src="static/github.png" alt="" id="github-logo" /><a
           href="https://github.com/vxeque/app.git"
           >GitHub</a
         >
       </p>
-    </footer>
+    </footer> -->
+
+    <!-- PDF.js local -->
+    <script type="module" src="./js/lib/pdf.min.js"></script>
+    <script type="module" src="./js/lib/pdf.worker.min.js"></script>
+    <!-- PDFTextExtractor -->
+    <script
+      type="module"
+      src="./js/extract_module/PDFTextExtractor.js"
+    ></script>
+
+    <script type="module" src="./js/extract_module/useExtractModule.js"></script>
   </body>
 </html>
