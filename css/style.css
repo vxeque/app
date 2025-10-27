@@ -1,10 +1,11 @@
 * {
   font-family: "Poppins", sans-serif;
-  background-color: black;
+  /* background-color: black; */
   color: white;
 }
 
 body {
+  background-color: black;
   /* height: 100vh; */
   height: 100%;
   /* display: grid; */

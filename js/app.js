@@ -235,6 +235,9 @@ class TranslatorApp {
     const translateButton = $("#translate-button"); // Asegúrate de tener este botón en tu HTML
     const activateButton = $("#activate-translator-button");
 
+    // boton para activar extractor de texto de pdf
+    const buttonAttachFile = $(".button-attach-file");
+
     // Activation button must be clicked by user to allow model download
     if (activateButton) {
       activateButton.addEventListener("click", async () => {
@@ -308,6 +311,12 @@ class TranslatorApp {
         this.outputTextArea.value = "Error: " + error.message;
       }
     });
+
+    // PDF extractor button
+    buttonAttachFile.addEventListener("click", async () => {
+      const pdfExtractorContainer = $(".pdf-extractor-container");
+      pdfExtractorContainer.style.display = pdfExtractorContainer.style.display === "none" ? "block" : "none";
+    });
   }
 
   /**
@@ -328,7 +337,7 @@ class TranslatorApp {
       console.log(`Extracting page ${current} of ${total}`);
     });
 
-    this.inputTextArea.value = 'hola';
+    this.inputTextArea.value = "hola";
 
     return {
       text,

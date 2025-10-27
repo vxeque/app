@@ -10,17 +10,13 @@
     <!-- importar estilos -->
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="./css/style.pdf.css" />
+    <link rel="stylesheet" href="./css/modal.css" />
 
     <!-- importar icono -->
     <link rel="icon" type="image/png" href="./static/traductor.png" />
 
     <!-- importar scripts -->
     <script type="module" src="./js/app.js"></script>
-    <!-- Primero cargar PDF.js -->
-    <!-- <script src="./js/lib/pdf.min.js"></script> -->
-
-    <!-- Luego cargar tus archivos -->
-    <!-- <script src="./js/extractPDF.js"></script> -->
   </head>
   <body>
     <nav>
@@ -99,7 +95,7 @@
               <div id="translate-button" class="button-close-download">
                 <img src="static/close.svg" id="" />
               </div>
-              <div id="translate-button" class="button-close-download">
+              <div id="translate-button" class="button-attach-file">
                 <img src="static/attach_file.svg" id="" />
               </div>
             </div>
@@ -129,75 +125,125 @@
       </div>
     </article>
 
+    <button popovertarget="miModal1">Abrir Modal 1</button>
+
+    <div id="miModal1" popover>
+      <h2>Contenido del Modal</h2>
+      <p>Este es el texto del modal.</p>
+      <button popovertarget="miModal1" popovertargetaction="hide">
+        Cerrar
+      </button>
+    </div>
+    <!-- modal -->
+    <button onclick="openModal('miModal1')">Abrir Modal 1</button>
+
+    <div id="miModal1" class="modal">
+      <div class="modal-content">
+        <span class="close-button" onclick="closeModal('miModal1')"
+          >&times;</span
+        >
+        <h2>Modal 1</h2>
+        <p>Contenido del primer modal...</p>
+      </div>
+    </div>
+
     <!-- codigo para PDF.js -->
-           <div class="upload-section">
-            <input type="file" id="pdf-file" accept=".pdf" class="file-input">
-            <label for="pdf-file" class="file-label">
-                <span class="file-icon">📄</span>
-                Seleccionar archivo PDF
-            </label>
+    <div class="pdf-extractor-container" style="display: none">
+      <div class="upload-section">
+        <input type="file" id="pdf-file" accept=".pdf" class="file-input" />
+        <label for="pdf-file" class="file-label"></label>
+      </div>
+
+      <div class="options-section">
+        <div class="option-group">
+          <label>
+            <input
+              type="radio"
+              name="extraction-mode"
+              id="extraction-mode"
+              value="all"
+              checked
+            />
+            Extraer todas las páginas
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="extraction-mode"
+              id="extraction-mode"
+              value="range"
+            />
+            Rango de páginas
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="extraction-mode"
+              id="extraction-mode"
+              value="single"
+            />
+            Página específica
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <div class="range-inputs style-inputs">
+          <input
+            type="number"
+            id="start-page"
+            placeholder="Desde"
+            min="1"
+            disabled
+          />
+          <span>a</span>
+          <input
+            type="number"
+            id="end-page"
+            placeholder="Hasta"
+            min="1"
+            disabled
+          />
         </div>
 
-        <div class="options-section">
-            <div class="option-group">
-                <label>
-                    <input type="radio" name="extraction-mode" value="all" checked>
-                    Extraer todas las páginas
-                </label>
-                <label>
-                    <input type="radio" name="extraction-mode" value="range">
-                    Rango de páginas
-                </label>
-                <label>
-                    <input type="radio" name="extraction-mode" value="single">
-                    Página específica
-                </label>
-            </div>
-
-            <div class="range-inputs">
-                <input type="number" id="start-page" placeholder="Desde" min="1" disabled>
-                <span>a</span>
-                <input type="number" id="end-page" placeholder="Hasta" min="1" disabled>
-            </div>
-
-            <div class="single-input">
-                <input type="number" id="single-page" placeholder="Número de página" min="1" disabled>
-            </div>
+        <div class="single-input style-inputs">
+          <input
+            type="number"
+            id="single-page"
+            placeholder="Número de página"
+            min="1"
+            disabled
+          />
         </div>
+      </div>
 
-        <div class="actions-section">
-            <button id="extract-btn" class="btn btn-primary" disabled>
-                Extraer Texto
-            </button>
-            <button id="clear-btn" class="btn btn-secondary">
-                Limpiar
-            </button>
+      <div class="actions-section">
+        <button id="extract-btn" class="btn btn-primary" disabled>
+          Extraer Texto
+        </button>
+        <button id="clear-btn" class="btn btn-secondary">Limpiar</button>
+      </div>
+
+      <div class="progress-section" id="progress-section" style="display: none">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
         </div>
+        <div class="progress-text" id="progress-text">Procesando...</div>
+      </div>
 
-        <div class="progress-section" id="progress-section" style="display: none;">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progress-fill"></div>
-            </div>
-            <div class="progress-text" id="progress-text">Procesando...</div>
+      <div class="results-section" id="results-section" style="display: none">
+        <div class="results-header">
+          <h3>Texto Extraído</h3>
+          <div class="results-actions">
+            <button id="copy-btn" class="btn btn-success">Copiar</button>
+            <button id="download-btn" class="btn btn-success">Descargar</button>
+          </div>
         </div>
+        <div class="results-info" id="results-info"></div>
+        <pre id="text-output"></pre>
+      </div>
 
-        <div class="results-section" id="results-section" style="display: none;">
-            <div class="results-header">
-                <h3>Texto Extraído</h3>
-                <div class="results-actions">
-                    <button id="copy-btn" class="btn btn-success">
-                        Copiar
-                    </button>
-                    <button id="download-btn" class="btn btn-success">
-                        Descargar
-                    </button>
-                </div>
-            </div>
-            <div class="results-info" id="results-info"></div>
-            <pre id="text-output"></pre>
-        </div>
-
-        <div id="status-messages"></div>
+      <div id="status-messages"></div>
     </div>
 
     <!-- Fin del código para PDF.js -->
@@ -220,6 +266,11 @@
       src="./js/extract_module/PDFTextExtractor.js"
     ></script>
 
-    <script type="module" src="./js/extract_module/useExtractModule.js"></script>
+    <script
+      type="module"
+      src="./js/extract_module/useExtractModule.js"
+    ></script>
+
+    <script type="module" src="./js/extract_module/modal.js"></script>
   </body>
 </html>
