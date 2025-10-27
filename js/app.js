@@ -1,4 +1,5 @@
 import { $, $$ } from "./dom.js";
+import { ModalManager } from "./extract_module/modal.js";
 // import { PDFTextExtractor } from "./extract_module/PDFTextExtractor.js";
 
 class TranslatorApp {
@@ -29,6 +30,8 @@ class TranslatorApp {
     this.targetLangSelect.value = TranslatorApp.DEFAULT_TARGET_LANG;
 
     this.sourceLangSelect.value = TranslatorApp.DEFAULT_SOURCE_LANG;
+
+
 
     // detectar version chrome
     this.checkChromeVersion();
@@ -312,13 +315,43 @@ class TranslatorApp {
       }
     });
 
+    /**
+     * 
+     * creación de modal para extraer texto de PDF
+     * 
+     * */
     // PDF extractor button
-    buttonAttachFile.addEventListener("click", async () => {
-      const pdfExtractorContainer = $(".pdf-extractor-container");
-      pdfExtractorContainer.style.display = pdfExtractorContainer.style.display === "none" ? "block" : "none";
-    });
-  }
+    // buttonAttachFile.addEventListener("click", async () => {
+    //   const pdfExtractorContainer = $(".pdf-extractor-container");
+    //   pdfExtractorContainer.style.display = pdfExtractorContainer.style.display === "none" ? "block" : "none";
 
+    //   // modal open button
+    //   const modal1Button = $(".modal1");
+
+    //   if (modal1Button) {
+    //     modal1Button.addEventListener("click",
+    //       () => {
+    //         openModal('miModal1');
+    //       });
+    //   }
+    // });
+
+    const modalManager = new ModalManager();
+    buttonAttachFile.addEventListener("click", async () => {
+      // abrir modal 
+      modalManager.open('miModal1');
+      // if (modalManager.getStateModal('miModal1')) {
+      //   modalManager.close('miModal1');
+      // }
+    })
+  
+    const modalcloseButton = $(".close-button");
+    
+      modalcloseButton.addEventListener("click", () => {
+        modalManager.close('miModal1');
+      });}
+
+    
   /**
    *
    * Extract text from uploaded PDF
@@ -336,8 +369,6 @@ class TranslatorApp {
     const text = await extractor.extractTextAllPages((current, total, page) => {
       console.log(`Extracting page ${current} of ${total}`);
     });
-
-    this.inputTextArea.value = "hola";
 
     return {
       text,
