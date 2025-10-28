@@ -1,6 +1,6 @@
 import { $, $$ } from "./dom.js";
 import { ModalManager } from "./extract_module/modal.js";
-// import { PDFTextExtractor } from "./extract_module/PDFTextExtractor.js";
+import { i18n } from "./i18n/i18n.js";
 
 class TranslatorApp {
   static DEFAULT_SOURCE_LANG = "es";
@@ -17,6 +17,7 @@ class TranslatorApp {
   }
 
   async init() {
+    await i18n.init();
     this.checkAPIAvailability();
     // get DOM elements
     this.inputTextArea = $("#input-text");
@@ -30,8 +31,6 @@ class TranslatorApp {
     this.targetLangSelect.value = TranslatorApp.DEFAULT_TARGET_LANG;
 
     this.sourceLangSelect.value = TranslatorApp.DEFAULT_SOURCE_LANG;
-
-
 
     // detectar version chrome
     this.checkChromeVersion();

@@ -1,214 +1,319 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Título de la página -->
+    <title data-i18n="title">Translator</title>
 
-  <!-- Título de la página -->
-  <title>Translator</title>
+    <!-- importar estilos -->
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/style.pdf.css" />
+    <link rel="stylesheet" href="./css/modal.css" />
 
-  <!-- importar estilos -->
-  <link rel="stylesheet" href="./css/style.css" />
-  <link rel="stylesheet" href="./css/style.pdf.css" />
-  <link rel="stylesheet" href="./css/modal.css" />
+    <!-- importar icono -->
+    <link rel="icon" type="image/png" href="./static/traductor.png" />
 
-  <!-- importar icono -->
-  <link rel="icon" type="image/png" href="./static/traductor.png" />
+    <!-- importar scripts -->
+    <script type="module" src="./js/app.js"></script>
+  </head>
 
-  <!-- importar scripts -->
-  <script type="module" src="./js/app.js"></script>
-</head>
+  <body>
+    <nav>
+      <ul class="nav-list">
+        <li class="dropdown-button">
+          <a
+            href="https://github.com/vxeque/app.git"
+            data-i18n="navigation.resources"
+            >Resources</a
+          >
+        </li>
+        <li class="dropdown">
+          <div class="dropdown-button" data-i18n="navigation.language">
+            Language
+          </div>
+          <div class="dropdown-content">
+            <ul class="language-list">
+              <li data-lang="en">
+                🇺🇸🇬🇧 <span data-i18n="languages.english">English</span>
+              </li>
+              <li data-lang="es">
+                🇪🇸 <span data-i18n="languages.spanish">Español</span>
+              </li>
+              <li data-lang="fr">
+                🇫🇷 <span data-i18n="languages.french">Français</span>
+              </li>
+              <li data-lang="de">
+                🇩🇪 <span data-i18n="languages.german">Deutsch</span>
+              </li>
+              <li data-lang="it">
+                🇮🇹 <span data-i18n="languages.italian">Italiano</span>
+              </li>
+              <li data-lang="zh">
+                🇨🇳 <span data-i18n="languages.chinese">中文</span>
+              </li>
+            </ul>
+          </div>
+        </li>
 
-<body>
-  <nav>
-    <ul class="nav-list">
-      <li class="dropdown-button">
-        <a href="https://github.com/vxeque/app.git">Resources</a>
-      </li>
-      <li class="dropdown">
-        <div class="dropdown-button">Language</div>
-        <div class="dropdown-content">
-          <ul class="language-list">
-            <li>🇺🇸🇬🇧 English</li>
-            <li>🇪🇸 Español</li>
-            <li>🇫🇷 Français</li>
-            <li>🇩🇪 Deutsch</li>
-            <li>🇮🇹 Italiano</li>
-            <li>🇨🇳 中文</li>
-          </ul>
-        </div>
-      </li>
+        <li class="dropdown-button">Help</li>
+      </ul>
+    </nav>
 
-      <li class="dropdown-button">
-        <!-- <a href="https://github.com/vxeque/app.git">Resources</a> -->
-        Help
-      </li>
-    </ul>
-  </nav>
+    <article>
+      <label id="label-text-activation"></label>
+      <!-- <button id="activate-translator-button">Activate Translator</button> -->
+      <h1 data-i18n="title">Translator</h1>
+      <div>
+        <form>
+          <div id="contend">
+            <div class="list_lenguages">
+              <label data-i18n="labels.textToTranslate"
+                >Text to translate</label
+              >
+              <select id="source-lang" name="sourceLang">
+                <option value="au" data-i18n="languages.automatic">
+                  Automatic
+                </option>
+                <option value="es" data-i18n="languages.spanish">
+                  Spanish
+                </option>
+                <option value="en" data-i18n="languages.english">
+                  English
+                </option>
+                <option value="fr" data-i18n="languages.french">French</option>
+                <option value="de" data-i18n="languages.german">German</option>
+                <option value="it" data-i18n="languages.italian">
+                  Italian
+                </option>
+                <option value="pt" data-i18n="languages.portuguese">
+                  Portuguese
+                </option>
+                <option value="ja" data-i18n="languages.japanese">
+                  Japanese
+                </option>
+                <option value="zh" data-i18n="languages.chinese">
+                  Chinese
+                </option>
+              </select>
+              <textarea
+                id="input-text"
+                type="text"
+                rows="4"
+                cols="50"
+                data-i18n="inputPlaceholder"
+                placeholder="Write the text to be translated..."
+              ></textarea>
+            </div>
 
-  <article>
-    <label id="label-text-activation"></label>
-    <!-- <button id="activate-translator-button">Activate Translator</button> -->
-    <h1>Translator</h1>
-    <div>
-      <form>
-        <div id="contend">
-          <div class="list_lenguages">
-            <label>Text to translate</label>
-            <select id="source-lang" name="sourceLang">
-              <option value="au">Automatico</option>
-              <option value="es">Español</option>
-              <option value="en">Inglés</option>
-              <option value="fr">Francés</option>
-              <option value="de">Alemán</option>
-              <option value="it">Italiano</option>
-              <option value="pt">Portugués</option>
-              <option value="ja">Japonés</option>
-              <option value="zh">Chino</option>
-            </select>
-            <textarea id="input-text" type="text" rows="4" cols="50"
-              placeholder="Write the text to be translated..."></textarea>
+            <div>
+              <div id="translate-button">
+                <img src="static/arrow_forward.svg" alt="" />
+              </div>
+
+              <div id="translate-button">
+                <img src="static/sync.svg" alt="" />
+              </div>
+
+              <div id="translate-button" class="button-close-download">
+                <img src="static/close.svg" id="" />
+              </div>
+              <div id="translate-button" class="button-attach-file">
+                <img src="static/attach_file.svg" id="" />
+              </div>
+            </div>
+
+            <div class="list_lenguages">
+              <label for="target-lang" data-i18n="labels.targetLanguage"
+                >Target Language</label
+              >
+              <select id="target-lang" name="sourceLang">
+                <option value="es" data-i18n="languages.spanish">
+                  Spanish
+                </option>
+                <option value="en" data-i18n="languages.english">
+                  English
+                </option>
+                <option value="fr" data-i18n="languages.french">French</option>
+                <option value="de" data-i18n="languages.german">German</option>
+                <option value="it" data-i18n="languages.italian">
+                  Italian
+                </option>
+                <option value="pt" data-i18n="languages.portuguese">
+                  Portuguese
+                </option>
+                <option value="ja" data-i18n="languages.japanese">
+                  Japanese
+                </option>
+                <option value="zh" data-i18n="languages.chinese">
+                  Chinese
+                </option>
+              </select>
+              <textarea
+                id="output-text"
+                type="text"
+                rows="4"
+                cols="50"
+                data-i18n="outputPlaceholder"
+                placeholder="Translated text..."
+              ></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+    </article>
+
+    <!-- modal -->
+    <div id="miModal1" class="modal" style="display: none">
+      <div class="modal-content">
+        <span class="close-button">&times;</span>
+
+        <!-- codigo para PDF.js -->
+        <div class="pdf-extractor-container">
+          <div class="upload-section">
+            <input type="file" id="pdf-file" accept=".pdf" class="file-input" />
+            <label for="pdf-file" class="file-label"></label>
+          </div>
+
+          <div class="options-section">
+            <div class="option-group">
+              <label>
+                <input
+                  type="radio"
+                  name="extraction-mode"
+                  id="extraction-mode"
+                  value="all"
+                  checked
+                />
+                Extraer todas las páginas
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="extraction-mode"
+                  id="extraction-mode"
+                  value="range"
+                />
+                Rango de páginas
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="extraction-mode"
+                  id="extraction-mode"
+                  value="single"
+                />
+                Página específica
+              </label>
+            </div>
           </div>
 
           <div>
-            <div id="translate-button">
-              <img src="static/arrow_forward.svg" alt="" />
+            <div class="range-inputs style-inputs">
+              <input
+                type="number"
+                id="start-page"
+                placeholder="Desde"
+                min="1"
+                disabled
+              />
+              <span>a</span>
+              <input
+                type="number"
+                id="end-page"
+                placeholder="Hasta"
+                min="1"
+                disabled
+              />
             </div>
 
-            <div id="translate-button">
-              <img src="static/sync.svg" alt="" />
-            </div>
-
-            <div id="translate-button" class="button-close-download">
-              <img src="static/close.svg" id="" />
-            </div>
-            <div id="translate-button" class="button-attach-file">
-              <img src="static/attach_file.svg" id="" />
-            </div>
-          </div>
-
-          <div class="list_lenguages">
-            <label for="target-lang">Target Language</label>
-            <select id="target-lang" name="sourceLang">
-              <option value="es">Español</option>
-              <option value="en">Inglés</option>
-              <option value="fr">Francés</option>
-              <option value="de">Alemán</option>
-              <option value="it">Italiano</option>
-              <option value="pt">Portugués</option>
-              <option value="ja">Japonés</option>
-              <option value="zh">Chino</option>
-            </select>
-            <textarea id="output-text" type="text" rows="4" cols="50" placeholder="Translated text..."></textarea>
-          </div>
-        </div>
-      </form>
-    </div>
-  </article>
-
-  <!-- <button popovertarget="miModal1">Abrir Modal 1</button>
-
-    <div id="miModal1" popover>
-      <h2>Contenido del Modal</h2>
-      <p>Este es el texto del modal.</p>
-      <button popovertarget="miModal1" popovertargetaction="hide">
-        Cerrar
-      </button>
-    </div> -->
-
-  <!-- modal -->
-  <div id="miModal1" class="modal" style="display: none">
-    <div class="modal-content">
-      <span class="close-button">&times;</span>
-
-      <!-- codigo para PDF.js -->
-      <div class="pdf-extractor-container">
-        <div class="upload-section">
-          <input type="file" id="pdf-file" accept=".pdf" class="file-input" />
-          <label for="pdf-file" class="file-label"></label>
-        </div>
-
-        <div class="options-section">
-          <div class="option-group">
-            <label>
-              <input type="radio" name="extraction-mode" id="extraction-mode" value="all" checked />
-              Extraer todas las páginas
-            </label>
-            <label>
-              <input type="radio" name="extraction-mode" id="extraction-mode" value="range" />
-              Rango de páginas
-            </label>
-            <label>
-              <input type="radio" name="extraction-mode" id="extraction-mode" value="single" />
-              Página específica
-            </label>
-          </div>
-        </div>
-
-        <div>
-          <div class="range-inputs style-inputs">
-            <input type="number" id="start-page" placeholder="Desde" min="1" disabled />
-            <span>a</span>
-            <input type="number" id="end-page" placeholder="Hasta" min="1" disabled />
-          </div>
-
-          <div class="single-input style-inputs">
-            <input type="number" id="single-page" placeholder="Número de página" min="1" disabled />
-          </div>
-        </div>
-
-        <div class="actions-section">
-          <button id="extract-btn" class="btn btn-primary" disabled>
-            Extraer Texto
-          </button>
-          <button id="clear-btn" class="btn btn-secondary">Limpiar</button>
-        </div>
-
-        <div class="progress-section" id="progress-section" style="display: none">
-          <div class="progress-bar">
-            <div class="progress-fill" id="progress-fill"></div>
-          </div>
-          <div class="progress-text" id="progress-text">Procesando...</div>
-        </div>
-
-        <div class="results-section" id="results-section" style="display: none">
-          <div class="results-header">
-            <h3>Texto Extraído</h3>
-            <div class="results-actions">
-              <button id="copy-btn" class="btn btn-success">Copiar</button>
-              <button id="download-btn" class="btn btn-success">Descargar</button>
+            <div class="single-input style-inputs">
+              <input
+                type="number"
+                id="single-page"
+                placeholder="Número de página"
+                min="1"
+                disabled
+              />
             </div>
           </div>
-          <div class="results-info" id="results-info"></div>
-          <pre id="text-output"></pre>
-        </div>
 
-        <div id="status-messages"></div>
+          <div class="actions-section">
+            <button
+              id="extract-btn"
+              class="btn btn-primary"
+              disabled
+              data-i18n="buttons.extractText"
+            >
+              Extract Text
+            </button>
+            <button
+              id="clear-btn"
+              class="btn btn-secondary"
+              data-i18n="buttons.clear"
+            >
+              Clear
+            </button>
+          </div>
+
+          <div
+            class="progress-section"
+            id="progress-section"
+            style="display: none"
+          >
+            <div class="progress-bar">
+              <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="progress-text" id="progress-text">Procesando...</div>
+          </div>
+
+          <div
+            class="results-section"
+            id="results-section"
+            style="display: none"
+          >
+            <div class="results-header">
+              <h3>Texto Extraído</h3>
+              <div class="results-actions">
+                <button id="copy-btn" class="btn btn-success">Copiar</button>
+                <button id="download-btn" class="btn btn-success">
+                  Descargar
+                </button>
+              </div>
+            </div>
+            <div class="results-info" id="results-info"></div>
+            <pre id="text-output"></pre>
+          </div>
+
+          <div id="status-messages"></div>
+        </div>
       </div>
-
     </div>
-  </div>
-  <!-- Fin del código para PDF.js -->
+    <!-- Fin del código para PDF.js -->
 
-  <!-- pie de pagina -->
-  <footer>
-    <p>
-      <img src="static/github.png" alt="" id="github-logo" /><a href="https://github.com/vxeque/app.git">GitHub</a>
-    </p>
-  </footer>
+    <!-- pie de pagina -->
+    <footer>
+      <p>
+        <img src="static/github.png" alt="" id="github-logo" /><a
+          href="https://github.com/vxeque/app.git"
+          >GitHub</a
+        >
+      </p>
+    </footer>
 
-  <!-- PDF.js local -->
-  <script type="module" src="./js/lib/pdf.min.js"></script>
-  <script type="module" src="./js/lib/pdf.worker.min.js"></script>
-  <!-- PDFTextExtractor -->
-  <script type="module" src="./js/extract_module/PDFTextExtractor.js"></script>
+    <!-- PDF.js local -->
+    <script type="module" src="./js/lib/pdf.min.js"></script>
+    <script type="module" src="./js/lib/pdf.worker.min.js"></script>
 
-  <script type="module" src="./js/extract_module/useExtractModule.js"></script>
-
-  <!-- <script type="module" src="./js/extract_module/modal.js"></script> -->
-
-  <!-- <script type="module" src="./js/extract_module/modal.js"></script> -->
-</body>
-
+    <!-- PDFTextExtractor -->
+    <script
+      type="module"
+      src="./js/extract_module/PDFTextExtractor.js"
+    ></script>
+    <script
+      type="module"
+      src="./js/extract_module/useExtractModule.js"
+    ></script>
+  </body>
 </html>
