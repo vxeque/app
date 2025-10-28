@@ -57,13 +57,12 @@
           </div>
         </li>
 
-        <li class="dropdown-button">Help</li>
+        <li class="dropdown-button" id="help-button">Help</li>
       </ul>
     </nav>
 
     <article>
       <label id="label-text-activation"></label>
-      <!-- <button id="activate-translator-button">Activate Translator</button> -->
       <h1 data-i18n="title">Translator</h1>
       <div>
         <form>
@@ -112,7 +111,7 @@
                 <img src="static/arrow_forward.svg" alt="" />
               </div>
 
-              <div id="translate-button" class="button-sync"> 
+              <div id="translate-button" class="button-sync">
                 <img src="static/sync.svg" alt="" />
               </div>
 
@@ -164,11 +163,45 @@
       </div>
     </article>
 
+    <!-- modal for help -->
+    <div id="miModalHelp" class="modal" style="display: none">
+      <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>Help</h2>
+        <div>
+          <h3>Browser Compatibility</h3>
+          <p>
+            To use the translator correctly, it must be opened in Google Chrome
+            version 141 or higher. We apologize for any inconvenience; as soon
+            as the necessary APIs are available for other browsers, you can
+            enjoy the translator in your favorite browser.
+          </p>
+        </div>
+        <div>
+          <h3>Downloading the Translation Model</h3>
+          <p>
+            It may take a few moments to launch as it downloads the translation
+            model from the Chrome Translate API. This model, powered by
+            artificial intelligence, allows for accurate and local translations.
+          </p>
+        </div>
+        <div>
+          <h3>Security and Privacy</h3>
+          <p>
+            Unlike other services, this translator does not use external
+            third-party APIs, which helps protect your personal information. All
+            translations are processed directly from the translator itself,
+            ensuring greater security and confidentiality.
+          </p>
+        </div>
+      </div>
+    </div>
+
     <!-- modal -->
     <div id="miModal1" class="modal" style="display: none">
       <div class="modal-content">
-        <span class="close-button">&times;</span>
-
+        <!-- <span class="close-button">&times;</span> -->
+        <span class="close-button"></span>
         <!-- codigo para PDF.js -->
         <div class="pdf-extractor-container">
           <div class="upload-section">

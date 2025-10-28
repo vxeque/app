@@ -314,9 +314,9 @@ class TranslatorApp {
       }
 
       /**
-       * 
+       *
        * Button to swap input and output text of textInput and outputTextArea
-       * 
+       *
        */
       const change_text = $(".button-sync");
       change_text.addEventListener("click", async () => {
@@ -357,15 +357,24 @@ class TranslatorApp {
     buttonAttachFile.addEventListener("click", async () => {
       // abrir modal
       modalManager.open("miModal1");
-      // if (modalManager.getStateModal('miModal1')) {
-      //   modalManager.close('miModal1');
-      // }
     });
-
     const modalcloseButton = $(".close-button");
-
+    console.log("modalcloseButton:", modalcloseButton);
     modalcloseButton.addEventListener("click", () => {
       modalManager.close("miModal1");
+    });
+
+    /**
+     *
+     * modal for help
+     */
+    const modalManagerHelp = new ModalManager();
+    const helpButton = $("#help-button");
+    helpButton.addEventListener("click", () => {
+      modalManagerHelp.open("miModalHelp");
+    });
+    modalcloseButton.addEventListener("click", () => {
+      modalManagerHelp.close("miModalHelp");
     });
   }
 
