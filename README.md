@@ -124,7 +124,15 @@ app/
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the GNU General Public License v3 (GPLv3) - see the [LICENSE](LICENSE) file for details.
+
+This means:
+- You can use this software for commercial purposes
+- You can modify this software
+- You MUST distribute your modifications under the same license
+- You MUST disclose the source code
+- You MUST state your changes
+- You MUST preserve the copyright and license notices
 
 ## 👥 Credits
 
