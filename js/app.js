@@ -48,9 +48,9 @@ class TranslatorApp {
     const chromeMatch = userAgent.match(/Chrome\/(\d+)/);
     if (chromeMatch) {
       const chromeVersion = parseInt(chromeMatch[1], 10);
-      console.log(`Chrome version detected: ${chromeVersion}`);
+      // console.log(`Chrome version detected: ${chromeVersion}`);
     } else {
-      console.log("Chrome version not detected");
+      // console.log("Chrome version not detected");
     }
   }
 
@@ -70,7 +70,7 @@ class TranslatorApp {
       this.isModelLoaded = true;
       activateBtn.textContent = "Translator Activated ✅";
     } catch (error) {
-      console.error("Error activating translator:", error);
+      // console.error("Error activating translator:", error);
     }
   }
 
@@ -79,9 +79,9 @@ class TranslatorApp {
     this.hasNativeDetector = "LanguageDetector" in window;
 
     if (!this.hasNativeTranslator || !this.hasNativeDetector) {
-      console.warn("Native translation or detection API not available.");
+      // console.warn("Native translation or detection API not available.");
     } else {
-      console.log("Native translation and detection API available.");
+      // console.log("Native translation and detection API available.");
     }
   }
 
@@ -89,10 +89,10 @@ class TranslatorApp {
     if (!this.hasNativeDetector) return false;
     try {
       this.detector = await LanguageDetector.create();
-      console.log("Language detector initialized");
+      // console.log("Language detector initialized");
       return true;
     } catch (error) {
-      console.error("Error creating detector:", error);
+      // console.error("Error creating detector:", error);
       return false;
     }
   }
@@ -119,9 +119,9 @@ class TranslatorApp {
         targetLanguage: targetLang,
       });
 
-      console.log(
-        `Translator availability for ${sourceLang} to ${targetLang}: ${status}`
-      );
+      // console.log(
+      //   `Translator availability for ${sourceLang} to ${targetLang}: ${status}`
+      // );
 
       //
       this.agregarOptionSiNoExiste(
@@ -193,11 +193,11 @@ class TranslatorApp {
       // Crear/obtener el traductor
       const translator = await this.createTranslator(sourceLang, targetLang);
 
-      console.log("Translator ready:", translator);
+      // console.log("Translator ready:", translator);
 
       // Traducir
       const translatedText = await translator.translate(text);
-      console.log(`Translated text: ${translatedText}`);
+      // console.log(`Translated text: ${translatedText}`);
 
       return {
         translatedText: translatedText,
@@ -206,7 +206,7 @@ class TranslatorApp {
         wasTranslated: true,
       };
     } catch (error) {
-      console.error("Error translating text:", error);
+      // console.error("Error translating text:", error);
       throw error;
     }
   }
@@ -227,7 +227,7 @@ class TranslatorApp {
         wasTranslated: true,
       };
     } catch (error) {
-      console.error("Translation error:", error);
+      // console.error("Translation error:", error);
       throw error;
     }
   }
@@ -246,7 +246,7 @@ class TranslatorApp {
         try {
           await this.activateTranslator();
         } catch (err) {
-          console.error("Activation failed:", err);
+          // console.error("Activation failed:", err);
         }
       });
     }
@@ -289,10 +289,10 @@ class TranslatorApp {
               }
             }
           } catch (createErr) {
-            console.error(
-              "Error creating translator on user gesture:",
-              createErr
-            );
+            // console.error(
+            //   "Error creating translator on user gesture:",
+            //   createErr
+            // );
             // If creation failed because the model requires more explicit user interaction,
             // instruct the user to click the activation button.
             if (createErr.message && createErr.message.includes("interactúa")) {
@@ -309,48 +309,66 @@ class TranslatorApp {
         const result = await this.translateText(text, targetLang);
         this.outputTextArea.value = result.translatedText;
       } catch (error) {
-        console.error("Translation failed:", error);
+        // console.error("Translation failed:", error);
         this.outputTextArea.value = "Error: " + error.message;
       }
+
+      /**
+       * 
+       * Button to swap input and output text of textInput and outputTextArea
+       * 
+       */
+      const change_text = $(".button-sync");
+      change_text.addEventListener("click", async () => {
+        const textInput = this.inputTextArea.value.trim();
+        const textOutput = this.outputTextArea.value.trim();
+
+        if (!text) {
+          this.outputTextArea.value = "Please enter text to translate.";
+          return;
+        }
+
+        this.inputTextArea.value = textOutput;
+        this.outputTextArea.value = textInput;
+
+        const targetLang = this.targetLangSelect.value;
+        const sourceLang = this.sourceLangSelect.value;
+
+        // intercambiar idiomas seleccionados
+        this.sourceLangSelect.value = targetLang;
+        this.targetLangSelect.value = sourceLang;
+
+        try {
+          const result = await this.translateText(text, targetLang);
+          this.outputTextArea.value = result.translatedText;
+        } catch (error) {
+          // console.error("Translation failed:", error);
+          this.outputTextArea.value = "Error: " + error.message;
+        }
+      });
     });
 
     /**
-     * 
+     *
      * creación de modal para extraer texto de PDF
-     * 
+     *
      * */
-    // PDF extractor button
-    // buttonAttachFile.addEventListener("click", async () => {
-    //   const pdfExtractorContainer = $(".pdf-extractor-container");
-    //   pdfExtractorContainer.style.display = pdfExtractorContainer.style.display === "none" ? "block" : "none";
-
-    //   // modal open button
-    //   const modal1Button = $(".modal1");
-
-    //   if (modal1Button) {
-    //     modal1Button.addEventListener("click",
-    //       () => {
-    //         openModal('miModal1');
-    //       });
-    //   }
-    // });
-
     const modalManager = new ModalManager();
     buttonAttachFile.addEventListener("click", async () => {
-      // abrir modal 
-      modalManager.open('miModal1');
+      // abrir modal
+      modalManager.open("miModal1");
       // if (modalManager.getStateModal('miModal1')) {
       //   modalManager.close('miModal1');
       // }
-    })
-  
-    const modalcloseButton = $(".close-button");
-    
-      modalcloseButton.addEventListener("click", () => {
-        modalManager.close('miModal1');
-      });}
+    });
 
-    
+    const modalcloseButton = $(".close-button");
+
+    modalcloseButton.addEventListener("click", () => {
+      modalManager.close("miModal1");
+    });
+  }
+
   /**
    *
    * Extract text from uploaded PDF
@@ -366,7 +384,7 @@ class TranslatorApp {
 
     // extraer texto
     const text = await extractor.extractTextAllPages((current, total, page) => {
-      console.log(`Extracting page ${current} of ${total}`);
+      // console.log(`Extracting page ${current} of ${total}`);
     });
 
     return {
