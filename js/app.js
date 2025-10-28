@@ -10,7 +10,7 @@ class TranslatorApp {
     this.detector = null;
     this.hasNativeDetector = false;
     this.hasNativeTranslator = false;
-    this.translators = {}; // Cache de traductores por par de idiomas
+    this.translators = {}; // Cache of translators by language pair
     this.currentTranslator = null;
     this.currentDetectedLang = null;
     this.isModelLoaded = false;
@@ -18,7 +18,7 @@ class TranslatorApp {
 
   async init() {
     this.checkAPIAvailability();
-    // recuperamos los elementos del DOM
+    // get DOM elements
     this.inputTextArea = $("#input-text");
     this.outputTextArea = $("#output-text");
     this.sourceLangSelect = $("#source-lang");
@@ -59,17 +59,17 @@ class TranslatorApp {
     try {
       const activateBtn = $("#label-text-activation");
 
-      activateBtn.textContent = "🔄 Activando Traductor...";
+      activateBtn.textContent = "🔄 Activating Translator...";
       activateBtn.disabled = true;
 
-      // precargar el modelo
+      // preload the model
       await this.createTranslator(
         TranslatorApp.DEFAULT_SOURCE_LANG,
         TranslatorApp.DEFAULT_TARGET_LANG
       );
 
       this.isModelLoaded = true;
-      activateBtn.textContent = "Traductor Activado ✅";
+      activateBtn.textContent = "Translator Activated ✅";
     } catch (error) {
       console.error("Error activating translator:", error);
     }
@@ -98,13 +98,13 @@ class TranslatorApp {
     }
   }
 
-  // Detectar el idioma de un texto
+  // Detect the language of a text
   async detectLanguage(text) {
     if (!this.detector) {
       await this.initDetector();
     }
     const results = await this.detector.detect(text);
-    return results[0]; // Retorna el resultado más probable
+    return results[0]; // Returns the most probable result
   }
 
   async createTranslator(sourceLang, targetLang) {

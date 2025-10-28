@@ -10,16 +10,16 @@ class PDFExtractorApp {
   initializeApp() {
     this.initializeExtractor();
     this.setupEventListeners();
-    this.showMessage("Aplicación lista. Selecciona un archivo PDF.", "info");
+    this.showMessage("Application ready. Select a PDF file.", "info");
   }
 
   async initializeExtractor() {
     try {
       this.extractor = new PDFTextExtractor();
-      console.log("Extractor inicializado");
+      console.log("Extractor initialized");
     } catch (error) {
       this.showMessage(
-        "Error inicializando el extractor: " + error.message,
+        "Error initializing extractor: " + error.message,
         "error"
       );
     }
@@ -92,7 +92,7 @@ class PDFExtractorApp {
     rangeInputs.style.display = mode === "range" ? "flex" : "none";
     singleInput.style.display = mode === "single" ? "flex" : "none";
 
-    // Habilitar/deshabilitar inputs
+    // Enable/disable inputs
     document.getElementById("start-page").disabled = mode !== "range";
     document.getElementById("end-page").disabled = mode !== "range";
     document.getElementById("single-page").disabled = mode !== "single";
@@ -154,7 +154,7 @@ class PDFExtractorApp {
     this.outputTextArea = $("#output-text");
     this.inputTextArea = $("#input-text");
 
-    // Actualizar información
+    // Update information
     let infoText = `Archivo: ${this.currentFile.name} | `;
 
     if (options.mode === "single") {
@@ -285,7 +285,7 @@ class PDFExtractorApp {
   }
 }
 
-// Inicializar la aplicación cuando el DOM esté listo
+// Initialize the application when DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
   new PDFExtractorApp();
 });

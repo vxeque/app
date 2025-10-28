@@ -1,10 +1,10 @@
-// Módulo para extracción de texto de PDF
+// Module for PDF text extraction
 class PDFTextExtractor {
     constructor() {
         this.pdfDoc = null;
         this.isInitialized = false;
         
-        // Configurar PDF.js worker
+        // Configure PDF.js worker
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'js/lib/pdf.worker.min.js';
         
         this.initialize();
@@ -12,22 +12,22 @@ class PDFTextExtractor {
 
     async initialize() {
         try {
-            // Verificar que PDF.js esté cargado
+            // Verify that PDF.js is loaded
             if (typeof pdfjsLib === 'undefined') {
-                throw new Error('PDF.js no está cargado correctamente');
+                throw new Error('PDF.js is not loaded correctly');
             }
             this.isInitialized = true;
-            console.log('PDFTextExtractor inicializado correctamente');
+            console.log('PDFTextExtractor initialized successfully');
         } catch (error) {
-            console.error('Error inicializando PDFTextExtractor:', error);
+            console.error('Error initializing PDFTextExtractor:', error);
             throw error;
         }
     }
 
     /**
-     * Carga un PDF desde un archivo
-     * @param {File} file - Archivo PDF
-     * @returns {Promise<Object>} - Información del PDF cargado
+     * Load a PDF from a file
+     * @param {File} file - PDF file
+     * @returns {Promise<Object>} - Loaded PDF information
      */
     async loadPDFFromFile(file) {
         if (!this.isInitialized) {
@@ -67,9 +67,9 @@ class PDFTextExtractor {
     }
 
     /**
-     * Carga un PDF desde una URL
-     * @param {string} url - URL del PDF
-     * @returns {Promise<Object>} - Información del PDF cargado
+     * Load a PDF from a URL
+     * @param {string} url - PDF URL
+     * @returns {Promise<Object>} - Loaded PDF information
      */
     async loadPDFFromURL(url) {
         if (!this.isInitialized) {
@@ -91,9 +91,9 @@ class PDFTextExtractor {
     }
 
     /**
-     * Extrae texto de una página específica
-     * @param {number} pageNum - Número de página (1-based)
-     * @returns {Promise<string>} - Texto extraído
+     * Extract text from a specific page
+     * @param {number} pageNum - Page number (1-based)
+     * @returns {Promise<string>} - Extracted text
      */
     async extractTextFromPage(pageNum) {
         if (!this.pdfDoc) {
